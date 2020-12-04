@@ -19,8 +19,11 @@ function AppContent() {
             feedback_email: submitEmail,
             feedback_name: submitName,
             feedback_description: submitDescription
-        })
-        history.push('/thanks')
+        }).then(()=>{
+            history.push('/thanks')
+        }).catch(()=>{
+            window.alert("Failed to upload. Check your network connection/")
+        }) 
     }
 
     const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
