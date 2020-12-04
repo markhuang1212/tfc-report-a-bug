@@ -1,15 +1,26 @@
 import './AppContent.css'
 import { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import React from 'react'
+// import { FeedbackInformation } from './Feedback'
+import FeedbackHandler from './FeedbackHandler'
 
 function AppContent() {
     const [submitName, setSubmitName] = useState('')
     const [submitEmail, setSubmitEmail] = useState('')
     const [submitDescription, setSubmitDescription] = useState('')
+    const history = useHistory()
 
-    const submitOnClick = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const submitOnClick = async (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
         e.preventDefault()
-        window.location.href = '/thanks'
+        await FeedbackHandler.shared.uploadFeedback({
+            feedback_email: submitEmail,
+            feedback_name: submitName,
+            feedback_description: submitDescription
+        })
+        // window.location.href = '/thanks'
+        // window.history.pushState(undefined, 'Report A Bug - Thanks', '/thanks')
+        history.push('/thanks')
     }
 
     const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,8 +35,10 @@ function AppContent() {
         setSubmitDescription(e.target.value)
     }
 
-    const onSelectFile = () => {
-        console.log("File Selected!")
+    const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            FeedbackHandler.shared.uploadFeedbackScreenshots(e.target.files)
+        }
     }
 
     return (
@@ -42,7 +55,7 @@ function AppContent() {
                     </div>
                     <div className="AppContentFormSelectFileField">
                         <label>Screenshots (optional):</label>
-                        <input type="file" accept="image/*" onChange={onSelectFile} multiple/>
+                        <input type="file" accept="image/*" onChange={onSelectFile} multiple />
                     </div>
                     <div className="AppContentFormTextField">
                         <label>Email (optional):</label>
