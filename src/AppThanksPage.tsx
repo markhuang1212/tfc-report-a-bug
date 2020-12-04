@@ -4,7 +4,7 @@ import FeedbackHandler from "./FeedbackHandler";
 
 function AppThanksPage() {
 
-    const [isUploading, setIsUploading] = useState(true)
+    const [isUploading, setIsUploading] = useState(FeedbackHandler.shared.status === 'idle' ? false : true)
     setInterval(() => {
         if (FeedbackHandler.shared.status === 'idle' && isUploading === true) {
             setIsUploading(false)

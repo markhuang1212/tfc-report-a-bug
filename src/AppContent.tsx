@@ -44,7 +44,7 @@ function AppContent() {
 
     return (
         <div className="AppContent">
-            <input style={{display:'none'}} type="file" accept="image/*" onChange={onSelectFile} multiple ref={uploadButtonRef} />
+            <input style={{ display: 'none' }} type="file" accept="image/*" onChange={onSelectFile} multiple ref={uploadButtonRef} />
             <div className="AppContentFormContainer">
                 <form className="AppContentForm">
                     <div className="AppContentFormTextField">
@@ -60,7 +60,9 @@ function AppContent() {
                         <button onClick={e => {
                             e.preventDefault();
                             (uploadButtonRef as any).current.click()
-                            }}>{hasChosenPhotos?'OK':'Select Photos'}</button>
+                        }}>
+                            {hasChosenPhotos ? 'Reselect' : 'Select Photos'}
+                        </button>
                     </div>
                     <div className="AppContentFormTextField">
                         <label>Email (optional):</label>
