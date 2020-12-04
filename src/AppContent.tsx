@@ -1,5 +1,5 @@
 import './AppContent.css'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import React from 'react'
 // import { FeedbackInformation } from './Feedback'
@@ -9,7 +9,9 @@ function AppContent() {
     const [submitName, setSubmitName] = useState('')
     const [submitEmail, setSubmitEmail] = useState('')
     const [submitDescription, setSubmitDescription] = useState('')
+    const [hasChosenPhotos, setHasChosenPhotos] = useState(false)
     const history = useHistory()
+    const uploadButtonRef = useRef(null)
 
     const submitOnClick = async (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
         e.preventDefault()
@@ -18,8 +20,6 @@ function AppContent() {
             feedback_name: submitName,
             feedback_description: submitDescription
         })
-        // window.location.href = '/thanks'
-        // window.history.pushState(undefined, 'Report A Bug - Thanks', '/thanks')
         history.push('/thanks')
     }
 
@@ -37,12 +37,14 @@ function AppContent() {
 
     const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
+            setHasChosenPhotos(true)
             FeedbackHandler.shared.uploadFeedbackScreenshots(e.target.files)
         }
     }
 
     return (
         <div className="AppContent">
+            <input style={{display:'none'}} type="file" accept="image/*" onChange={onSelectFile} multiple ref={uploadButtonRef} />
             <div className="AppContentFormContainer">
                 <form className="AppContentForm">
                     <div className="AppContentFormTextField">
@@ -55,7 +57,10 @@ function AppContent() {
                     </div>
                     <div className="AppContentFormSelectFileField">
                         <label>Screenshots (optional):</label>
-                        <input type="file" accept="image/*" onChange={onSelectFile} multiple />
+                        <button onClick={e => {
+                            e.preventDefault();
+                            (uploadButtonRef as any).current.click()
+                            }}>{hasChosenPhotos?'OK':'Select Photos'}</button>
                     </div>
                     <div className="AppContentFormTextField">
                         <label>Email (optional):</label>
