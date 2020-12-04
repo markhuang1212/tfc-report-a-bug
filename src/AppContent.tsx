@@ -9,7 +9,7 @@ function AppContent() {
 
     const submitOnClick = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
         e.preventDefault()
-        console.log("Hello!")
+        // 
     }
 
     const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,11 +41,11 @@ function AppContent() {
                         <textarea placeholder="Describe Your Bug Here. Please provide as much detail as possible as it will help us improve our product better." onChange={onDescriptionChanged} value={submitDescription} />
                     </div>
                     <div className="AppContentFormSelectFileField">
-                        <label>Screenshot(optional):</label>
-                        <input type="file" accept="image/*" onChange={onSelectFile} />
+                        <label>Screenshots (optional):</label>
+                        <input type="file" accept="image/*" onChange={onSelectFile} multiple/>
                     </div>
                     <div className="AppContentFormTextField">
-                        <label>Email(optional):</label>
+                        <label>Email (optional):</label>
                         <input type="email" onChange={onEmailChanged} value={submitEmail} />
                     </div>
                     <input type="submit" className="AppContentFormSubmitButton" onClick={submitOnClick} />
