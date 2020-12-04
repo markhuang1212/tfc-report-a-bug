@@ -5,7 +5,10 @@ function AppThanksPage() {
     return (
         <div>
             <AppHeader></AppHeader>
-            <div>
+            <div style={{
+                marginTop: '240px',
+                fontSize: '28px'
+            }}>
                 Thanks for your feedback!
             </div>
         </div>

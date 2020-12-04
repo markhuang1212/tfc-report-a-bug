@@ -9,7 +9,7 @@ function AppContent() {
 
     const submitOnClick = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
         e.preventDefault()
-        // 
+        window.location.href = '/thanks'
     }
 
     const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
