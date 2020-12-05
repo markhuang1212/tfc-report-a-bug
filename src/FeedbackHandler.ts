@@ -1,5 +1,6 @@
 import { FeedbackInformation } from "./Feedback"
 
+const protocol = window.location.protocol
 const uri = window.location.host
 
 class FeedbackHandler {
@@ -18,7 +19,7 @@ class FeedbackHandler {
     }
 
     async getFeedbackId() {
-        const fetch_id_response = await window.fetch(`${uri}/generateFeedbackId`)
+        const fetch_id_response = await window.fetch(`${protocol}//${uri}/generateFeedbackId`)
         const fetch_id_data = await fetch_id_response.json()
         return fetch_id_data.data.feedback_id
     }
@@ -26,7 +27,7 @@ class FeedbackHandler {
     async uploadFeedbackScreenshots(files: FileList) {
         this.status = 'ongoing'
         for (let i = 0; i < files.length; i++) {
-            await window.fetch(`${uri}/feedbackScreenshots`, {
+            await window.fetch(`${protocol}//${uri}/feedbackScreenshots`, {
                 method: 'post',
                 headers: {
                     feedback_id: this.feedback_id,
@@ -40,7 +41,7 @@ class FeedbackHandler {
 
     async uploadFeedback(feedback: FeedbackInformation) {
         this.status = 'ongoing'
-        await window.fetch(`${uri}/feedbackInfo`, {
+        await window.fetch(`${protocol}//${uri}/feedbackInfo`, {
             method: 'post',
             headers:{
                 'Content-Type': 'application/json'
