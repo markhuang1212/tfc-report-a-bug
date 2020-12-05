@@ -1,6 +1,6 @@
 import { FeedbackInformation } from "./Feedback"
 
-const uri = 'http://localhost:3001'
+const uri = window.location.host
 
 class FeedbackHandler {
 
