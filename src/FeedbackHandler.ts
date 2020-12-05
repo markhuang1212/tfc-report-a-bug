@@ -8,7 +8,6 @@ class FeedbackHandler {
 
     feedback_id!: string
 
-    // status: 'ongoing' | 'idle'
     job_queue_length = 0
 
     static shared = new FeedbackHandler()
@@ -18,6 +17,11 @@ class FeedbackHandler {
             this.feedback_id = id
         })
         // this.status = 'idle'
+    }
+
+    async resetHandler() {
+        this.job_queue_length = 0
+        this.feedback_id = await this.getFeedbackId()
     }
 
     async getFeedbackId() {

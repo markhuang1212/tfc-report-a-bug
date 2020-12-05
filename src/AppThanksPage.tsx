@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import AppHeader from "./AppHeader";
 import FeedbackHandler from "./FeedbackHandler";
 
 function AppThanksPage() {
+
+    const { t } = useTranslation()
 
     const [isUploading, setIsUploading] = useState(FeedbackHandler.shared.job_queue_length == 0 ? false : true)
     setInterval(() => {
@@ -21,8 +24,10 @@ function AppThanksPage() {
                 marginTop: '240px',
                 fontSize: '28px'
             }}>
-                Thanks for your feedback!<br />
-                <span style={{ fontSize: '16px', color: 'gray', opacity: isUploading ? 1 : 0 }}>Uploading... Please Wait</span>
+                {t('thank you')}<br />
+                <span style={{ fontSize: '16px', color: 'gray' }}>
+                    {isUploading ? t('submitting') : t('submitted')}
+                </span>
             </div>
         </div>
     )

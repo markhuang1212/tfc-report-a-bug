@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import React from 'react'
 // import { FeedbackInformation } from './Feedback'
 import FeedbackHandler from './FeedbackHandler'
+import { useTranslation } from 'react-i18next'
 
 function AppContent() {
     const [submitName, setSubmitName] = useState('')
@@ -13,17 +14,21 @@ function AppContent() {
     const [hasChosenPhotos, setHasChosenPhotos] = useState(false)
     const history = useHistory()
     const uploadButtonRef = useRef(null)
+    const { t } = useTranslation()
 
     const submitOnClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
-        await FeedbackHandler.shared.uploadFeedback({
-            feedback_email: submitEmail,
-            feedback_name: submitName,
-            feedback_description: submitDescription
-        }).catch(() => {
-            window.alert("Failed to upload. Check your network connection/")
-        })
-        history.push('/thanks')
+        try {
+            await FeedbackHandler.shared.uploadFeedback({
+                feedback_email: submitEmail,
+                feedback_name: submitName,
+                feedback_description: submitDescription
+            })
+            history.push('/thanks')
+        } catch {
+            window.alert(t('error'))
+            FeedbackHandler.shared.resetHandler()
+        }
     }
 
     const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,32 +62,32 @@ function AppContent() {
             <div className="AppContentFormContainer">
                 <form className="AppContentForm">
                     <div className="AppContentFormBugDescriptionField">
-                        <label>Bug Description:</label>
-                        <textarea placeholder="Describe Your Bug Here. Please provide as much detail as possible as it will help us improve our product better." onChange={onDescriptionChanged} value={submitDescription} />
+                        <label>{t('bug description')}</label>
+                        <textarea placeholder={t('describe your bug')} onChange={onDescriptionChanged} value={submitDescription} />
                     </div>
                     <div className="AppContentFormSelectFileField">
-                        <label>Screenshots (optional):</label>
+                        <label>{t('screenshots')}:</label>
                         <button onClick={e => {
                             e.preventDefault();
                             (uploadButtonRef as any).current.click()
                         }}>
-                            {hasChosenPhotos ? 'Reselect' : 'Select Photos'}
+                            {hasChosenPhotos ? t('reselect') : t('select photos')}
                         </button>
                     </div>
-                    <div style={{color:'gray', fontWeight: 500}}>Contract Information (optional)</div>
+                    <div style={{ color: 'gray', fontWeight: 500 }}>{t('contact info')}</div>
                     <div className="AppContentFormTextField">
-                        <label>Your Name:</label>
+                        <label>{t('your name')}:</label>
                         <input type="name" onChange={onNameChanged} value={submitName} />
                     </div>
                     <div className="AppContentFormTextField">
-                        <label>Email:</label>
+                        <label>{t('email')}:</label>
                         <input type="email" onChange={onEmailChanged} value={submitEmail} />
                     </div>
                     <div className="AppContentFormTextField">
-                        <label>Phone:</label>
+                        <label>{t('phone')}:</label>
                         <input type="phone" onChange={onPhoneChanged} value={submitPhone} />
                     </div>
-                    <button className="AppContentFormSubmitButton" onClick={submitOnClick}>Submit</button>
+                    <button className="AppContentFormSubmitButton" onClick={submitOnClick}>{t('submit')}</button>
                 </form>
             </div>
         </div >
