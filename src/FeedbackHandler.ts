@@ -1,8 +1,9 @@
 import { FeedbackInformation } from "./Feedback"
+import Env from './env.json'
 
 const protocol = window.location.protocol
 const uri = window.location.hostname
-const port = 3001
+const port = Env.port
 
 class FeedbackHandler {
 
