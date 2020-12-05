@@ -22,7 +22,8 @@ function AppContent() {
             await FeedbackHandler.shared.uploadFeedback({
                 feedback_email: submitEmail,
                 feedback_name: submitName,
-                feedback_description: submitDescription
+                feedback_description: submitDescription,
+                feedback_phone: submitPhone
             })
             history.push('/thanks')
         } catch {
