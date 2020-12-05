@@ -1,13 +1,15 @@
 import { FeedbackInformation } from "./Feedback"
 
 const protocol = window.location.protocol
-const uri = window.location.host
+const uri = window.location.hostname
+const port = 3001
 
 class FeedbackHandler {
 
     feedback_id!: string
 
-    status: 'ongoing' | 'idle'
+    // status: 'ongoing' | 'idle'
+    job_queue_length = 0
 
     static shared = new FeedbackHandler()
 
@@ -15,35 +17,36 @@ class FeedbackHandler {
         this.getFeedbackId().then(id => {
             this.feedback_id = id
         })
-        this.status = 'idle'
+        // this.status = 'idle'
     }
 
     async getFeedbackId() {
-        const fetch_id_response = await window.fetch(`${protocol}//${uri}/generateFeedbackId`)
+        const fetch_id_response = await window.fetch(`${protocol}//${uri}:${port}/generateFeedbackId`)
         const fetch_id_data = await fetch_id_response.json()
         return fetch_id_data.data.feedback_id
     }
 
-    async uploadFeedbackScreenshots(files: FileList) {
-        this.status = 'ongoing'
-        for (let i = 0; i < files.length; i++) {
-            await window.fetch(`${protocol}//${uri}/feedbackScreenshots`, {
-                method: 'post',
-                headers: {
-                    feedback_id: this.feedback_id,
-                    screenshot_name: files[i].name
-                },
-                body: files[i]
-            })
-        }
-        this.status = 'idle'
+    async uploadFeedbackScreenshot(file: File) {
+        this.job_queue_length++
+        console.log(`job queue length: ${this.job_queue_length}`)
+        await window.fetch(`${protocol}//${uri}:${port}/feedbackScreenshots`, {
+            method: 'post',
+            headers: {
+                feedback_id: this.feedback_id,
+                screenshot_name: file.name
+            },
+            body: file
+        })
+        this.job_queue_length--
+        console.log(`job queue length: ${this.job_queue_length}`)
     }
 
     async uploadFeedback(feedback: FeedbackInformation) {
-        this.status = 'ongoing'
-        await window.fetch(`${protocol}//${uri}/feedbackInfo`, {
+        this.job_queue_length++
+        console.log(`job queue length: ${this.job_queue_length}`)
+        await window.fetch(`${protocol}//${uri}:${port}/feedbackInfo`, {
             method: 'post',
-            headers:{
+            headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -51,7 +54,8 @@ class FeedbackHandler {
                 feedback_id: this.feedback_id
             } as FeedbackInformation)
         })
-        this.status = 'idle'
+        this.job_queue_length--
+        console.log(`job queue length: ${this.job_queue_length}`)
     }
 }
 

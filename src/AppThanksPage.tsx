@@ -4,12 +4,12 @@ import FeedbackHandler from "./FeedbackHandler";
 
 function AppThanksPage() {
 
-    const [isUploading, setIsUploading] = useState(FeedbackHandler.shared.status === 'idle' ? false : true)
+    const [isUploading, setIsUploading] = useState(FeedbackHandler.shared.job_queue_length == 0 ? false : true)
     setInterval(() => {
-        if (FeedbackHandler.shared.status === 'idle' && isUploading === true) {
+        if (FeedbackHandler.shared.job_queue_length == 0 && isUploading === true) {
             setIsUploading(false)
         }
-        if (FeedbackHandler.shared.status === 'ongoing' && isUploading === false) {
+        if (FeedbackHandler.shared.job_queue_length >= 1 && isUploading === false) {
             setIsUploading(true)
         }
     }, 200)

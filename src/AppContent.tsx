@@ -19,11 +19,10 @@ function AppContent() {
             feedback_email: submitEmail,
             feedback_name: submitName,
             feedback_description: submitDescription
-        }).then(()=>{
-            history.push('/thanks')
-        }).catch(()=>{
+        }).catch(() => {
             window.alert("Failed to upload. Check your network connection/")
-        }) 
+        })
+        history.push('/thanks')
     }
 
     const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,7 +40,9 @@ function AppContent() {
     const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             setHasChosenPhotos(true)
-            FeedbackHandler.shared.uploadFeedbackScreenshots(e.target.files)
+            for (let i = 0; i < e.target.files.length; i++) {
+                FeedbackHandler.shared.uploadFeedbackScreenshot(e.target.files[i])
+            }
         }
     }
 
