@@ -7,23 +7,24 @@ import FeedbackHandler from './FeedbackHandler'
 
 function AppContent() {
     const [submitName, setSubmitName] = useState('')
+    const [submitPhone, setSubmitPhone] = useState('')
     const [submitEmail, setSubmitEmail] = useState('')
     const [submitDescription, setSubmitDescription] = useState('')
     const [hasChosenPhotos, setHasChosenPhotos] = useState(false)
     const history = useHistory()
     const uploadButtonRef = useRef(null)
 
-    const submitOnClick = async (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const submitOnClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         await FeedbackHandler.shared.uploadFeedback({
             feedback_email: submitEmail,
             feedback_name: submitName,
             feedback_description: submitDescription
-        }).then(()=>{
+        }).then(() => {
             history.push('/thanks')
-        }).catch(()=>{
+        }).catch(() => {
             window.alert("Failed to upload. Check your network connection/")
-        }) 
+        })
     }
 
     const onNameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +33,10 @@ function AppContent() {
 
     const onEmailChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSubmitEmail(e.target.value)
+    }
+
+    const onPhoneChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSubmitPhone(e.target.value)
     }
 
     const onDescriptionChanged = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -50,10 +55,6 @@ function AppContent() {
             <input style={{ display: 'none' }} type="file" accept="image/*" onChange={onSelectFile} multiple ref={uploadButtonRef} />
             <div className="AppContentFormContainer">
                 <form className="AppContentForm">
-                    <div className="AppContentFormTextField">
-                        <label>Name:</label>
-                        <input type="name" onChange={onNameChanged} value={submitName} />
-                    </div>
                     <div className="AppContentFormBugDescriptionField">
                         <label>Bug Description:</label>
                         <textarea placeholder="Describe Your Bug Here. Please provide as much detail as possible as it will help us improve our product better." onChange={onDescriptionChanged} value={submitDescription} />
@@ -67,11 +68,20 @@ function AppContent() {
                             {hasChosenPhotos ? 'Reselect' : 'Select Photos'}
                         </button>
                     </div>
+                    <div style={{color:'gray', fontWeight: 500}}>Contract Information (optional)</div>
                     <div className="AppContentFormTextField">
-                        <label>Email (optional):</label>
+                        <label>Your Name:</label>
+                        <input type="name" onChange={onNameChanged} value={submitName} />
+                    </div>
+                    <div className="AppContentFormTextField">
+                        <label>Email:</label>
                         <input type="email" onChange={onEmailChanged} value={submitEmail} />
                     </div>
-                    <input type="submit" className="AppContentFormSubmitButton" onClick={submitOnClick} />
+                    <div className="AppContentFormTextField">
+                        <label>Phone:</label>
+                        <input type="phone" onChange={onPhoneChanged} value={submitPhone} />
+                    </div>
+                    <button className="AppContentFormSubmitButton" onClick={submitOnClick}>Submit</button>
                 </form>
             </div>
         </div >
