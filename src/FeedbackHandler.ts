@@ -1,3 +1,4 @@
+import 'whatwg-fetch'
 import { FeedbackInformation } from "./Feedback"
 import Env from './env.json'
 
@@ -35,7 +36,7 @@ class FeedbackHandler {
         this.job_queue_length++
         console.log(`job queue length: ${this.job_queue_length}`)
         await window.fetch(`${protocol}//${uri}:${port}/feedbackScreenshots`, {
-            method: 'post',
+            method: 'POST',
             headers: {
                 feedback_id: this.feedback_id,
                 screenshot_name: file.name
