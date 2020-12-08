@@ -68,6 +68,7 @@ function AppContent() {
                     </div>
                     <div className="AppContentFormSelectFileField">
                         <label>{t('screenshots')}:</label>
+                        <span>{hasChosenPhotos ? t('selected') : ''}</span>
                         <button onClick={e => {
                             e.preventDefault();
                             (uploadButtonRef as any).current.click()
