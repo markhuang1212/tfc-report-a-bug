@@ -7,9 +7,9 @@ function AppThanksPage() {
 
     const { t } = useTranslation()
 
-    const [isUploading, setIsUploading] = useState(FeedbackHandler.shared.job_queue_length == 0 ? false : true)
+    const [isUploading, setIsUploading] = useState(FeedbackHandler.shared.job_queue_length === 0 ? false : true)
     setInterval(() => {
-        if (FeedbackHandler.shared.job_queue_length == 0 && isUploading === true) {
+        if (FeedbackHandler.shared.job_queue_length === 0 && isUploading === true) {
             setIsUploading(false)
         }
         if (FeedbackHandler.shared.job_queue_length >= 1 && isUploading === false) {

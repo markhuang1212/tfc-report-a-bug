@@ -89,6 +89,9 @@ function AppContent() {
                         <input type="phone" onChange={onPhoneChanged} value={submitPhone} />
                     </div>
                     <button className="AppContentFormSubmitButton" onClick={submitOnClick}>{t('submit')}</button>
+                    <div className="AppContentBottomBarText">
+                        {t('product name')}
+                    </div>
                 </form>
             </div>
         </div >

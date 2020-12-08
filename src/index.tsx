@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './i18n';
 import App from './App';
+import i18next from 'i18next'
+
+document.title = i18next.t('report a bug')
 
 ReactDOM.render(
     <React.StrictMode>
