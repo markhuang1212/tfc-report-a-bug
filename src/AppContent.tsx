@@ -26,7 +26,9 @@ function AppContent() {
                 feedback_phone: submitPhone
             })
             history.push('/thanks')
-        } catch {
+        } catch (e) {
+            console.error(`Error when submitting feedback`)
+            console.error(e)
             window.alert(t('error'))
             FeedbackHandler.shared.resetHandler()
         }
@@ -52,7 +54,10 @@ function AppContent() {
         if (e.target.files) {
             setHasChosenPhotos(true)
             for (let i = 0; i < e.target.files.length; i++) {
-                FeedbackHandler.shared.uploadFeedbackScreenshot(e.target.files[i])
+                FeedbackHandler.shared.uploadFeedbackScreenshot(e.target.files[i]).catch(e => {
+                    console.error(`Error when uploading screenshot.`)
+                    console.error(e)
+                })
             }
         }
     }
