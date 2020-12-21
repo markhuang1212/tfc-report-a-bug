@@ -1,10 +1,10 @@
 import 'whatwg-fetch'
 import { FeedbackInformation } from "./Feedback"
-import Env from './env.json'
+// import Env from './env.json'
 
 const isDevEnv = () => {
     const uri = window.location.hostname
-    return uri == 'localhost' || uri == '127.0.0.1' || uri.includes('192.168')
+    return uri === 'localhost' || uri === '127.0.0.1' || uri.includes('192.168')
 }
 
 const protocol = window.location.protocol
