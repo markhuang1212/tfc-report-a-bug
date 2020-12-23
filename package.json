@@ -1,6 +1,7 @@
 {
   "name": "tfc-report-a-bug",
-  "version": "0.1.0",
+  "homepage": "/bug_report/",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.6",
