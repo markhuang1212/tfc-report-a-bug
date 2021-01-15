@@ -11,7 +11,7 @@ import AppThanksPage from './AppThanksPage';
 
 function App() {
     return (
-        <Router basename="/bug_report">
+        <Router>
             <div className="App">
                 <Switch>
                     <Route path="/thanks">

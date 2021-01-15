@@ -1,6 +1,6 @@
 {
   "name": "tfc-report-a-bug",
-  "homepage": "/bug_report/",
+  "homepage": "/",
   "version": "0.2.0",
   "private": true,
   "dependencies": {

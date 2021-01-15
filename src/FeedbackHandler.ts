@@ -11,7 +11,7 @@ const protocol = window.location.protocol
 const uri = window.location.hostname
 const port = isDevEnv() ? 3001 : window.location.port
 
-const path = `${protocol}//${uri}:${port}/bug_report`
+const path = `${protocol}//${uri}:${port}`
 
 class FeedbackHandler {
 
